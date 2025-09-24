@@ -22,6 +22,7 @@ A falta de canais de intermediação acessíveis agrava tanto o desperdício de 
 Com isso, promove-se a solidariedade, reduz-se o descarte inadequado e fortalece-se o espírito comunitário, tornando a doação um processo simples e motivador.
 
 c) **Telas do Projeto Front-End**
+
 **Páginas Públicas**
 
 - Página inicial/apresentação: apresenta a proposta, objetivos e benefícios da plataforma.
