@@ -46,3 +46,6 @@ c) **Telas do Projeto Front-End**
 Considerações Finais
 
 O DoaAí propõe uma solução prática para enfrentar o problema da má distribuição de recursos, conectando pessoas em um ambiente digital seguro e intuitivo. Ao simplificar o processo de doação, o sistema não apenas contribui para reduzir o desperdício, mas também promove a inclusão social e o fortalecimento dos laços comunitários.
+
+Link da prototipação do DoaAí no Figma:
+https://www.figma.com/proto/E90zZOSp8ixeYk958Z6cPX/DoaA%C3%AD-web?node-id=18-474&p=f&t=AMJtr0jHb61yQoo2-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1
