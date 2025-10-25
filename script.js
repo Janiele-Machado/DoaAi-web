@@ -122,6 +122,14 @@ function navigateTo(screen, itemId = null) {
             AppState.selectedItemId = itemId;
             loadItemDetail(itemId);
         }
+
+        // Controlar visibilidade do footer
+        const footer = document.querySelector('.site-footer');
+        const screensWithFooter = ['login', 'home', 'register', 'recover', 'recover-code', 'reset-password'];
+
+        if (footer) {
+            footer.style.display = screensWithFooter.includes(screen) ? 'block' : 'none';
+        }
     }
 }
 
@@ -404,7 +412,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Ir para login após 2 segundos
     setTimeout(() => {
-        navigateTo('login');
+        // Apenas navega se ainda estiver na splash screen, para não interromper o usuário
+        if (AppState.currentScreen === 'splash') {
+            navigateTo('login');
+        }
     }, 2000);
     
     // Setup event listeners
