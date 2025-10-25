@@ -20,6 +20,7 @@
     --shadow: 0 2px 8px rgba(138, 43, 226, 0.1);
     --shadow-lg: 0 4px 16px rgba(138, 43, 226, 0.15);
     --spacing-xs: 8px;
+    --spacing-ft: 4px;
     --spacing-sm: 16px;
     --spacing-md: 24px;
     --spacing-lg: 32px;
@@ -91,7 +92,7 @@ body {
     padding: var(--spacing-lg);
     margin-top: 0px;
     padding-top: 0px;
-    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 50%, var(--primary-dark) 100%);
+    background: var(--primary);
 }
 
 .auth-card {
@@ -110,6 +111,17 @@ body {
 .auth-card--small {
     max-width: 380px;
     padding: 28px 20px;
+}
+
+/* Espaçamento superior para a tela de cadastro */
+#register-screen {
+    padding-top: 60px; /* ajuste: aumenta espaço acima do card de cadastro */
+}
+
+@media (max-width: 480px) {
+    #register-screen {
+        padding-top: 36px; /* menos espaço em telas pequenas */
+    }
 }
 
 /* Container para a logo do login posicionada fora do modal */
@@ -276,7 +288,7 @@ body {
 /* Cabeçalho / Navbar */
 .header {
     background: var(--primary);
-    padding: var(--spacing-md) 0;
+    padding: var(--spacing-md) 0 0 0;
     box-shadow: var(--shadow);
     position: sticky;
     top: 0;
@@ -494,7 +506,8 @@ body {
 
 /* Tela de Perfil */
 .profile-header {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    
+    background: var(--primary);
     padding: var(--spacing-xl) var(--spacing-md);
     text-align: center;
     color: white;
@@ -777,7 +790,8 @@ body {
 }
 
 .site-logo {
-    height: 36px;
+    /* aumentar um pouco a logo exibida no header/top-nav */
+    height: 40px;
 }
 
 /* Estilizar o contêiner da logo no header com fundo roxo */
@@ -787,7 +801,8 @@ body {
 }
 
 .header-content .logo .site-logo {
-    height: 34px;
+    /* ajuste específico dentro do header para proporção */
+    height: 44px;
 }
 
 /* Ajustes de contraste dentro do header roxo */
@@ -795,6 +810,34 @@ body {
 .header-content .top-nav .nav-item span,
 .header-content .top-nav .nav-item i {
     color: white;
+}
+
+/* Estilização do voltar*/
+.header .btn-ghost {
+    color: white;
+}
+
+.header .btn-ghost:hover {
+    /* manter legibilidade ao passar o mouse */
+    color: rgba(255,255,255,0.9);
+}
+
+#donate-screen .header h3 {
+    color: white;
+}
+
+#chat-screen .header h3 {
+    color: white;
+}
+
+#profile-screen .header h3 {
+    color: white;
+}
+
+#chat-screen .header,
+#profile-screen .header,
+#donate-screen .header {
+    padding: var(--spacing-md) 0; /* restaura padding-top e padding-bottom originais */
 }
 
 .header-content .top-nav .nav-item:hover,
@@ -832,7 +875,8 @@ body {
         width: 160px;
     }
     .site-logo {
-        height: 30px;
+        /* reduzir um pouco em telas pequenas */
+        height: 36px;
     }
 }
 
@@ -1257,6 +1301,54 @@ input:checked + .slider:before {
     to {
         transform: rotate(360deg);
     }
+}
+
+/* Footer */
+.site-footer {
+    background: var(--primary);
+    color: white;
+    padding: var(--spacing-ft) 0;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.footer-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.footer-link {
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+    display: block;
+}
+
+.footer-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-ft);
+}
+
+.footer-email {
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-ft);
+}
+
+.footer-link:hover {
+    opacity: 0.8;
+}
+
+.copyright {
+    font-size: 0.95rem;
+    opacity: 0.85;
+    margin-top: var(--spacing-ft);
 }
 
 /* Responsivo */
