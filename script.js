@@ -4,7 +4,8 @@ const AppState = {
     isLoggedIn: false,
     currentUser: null,
     selectedItemId: null,
-    selectedCategory: 'all',
+    homeCategoryFilter: 'all',
+    myDonationsStatusFilter: 'available', // 'available' ou 'donated'
     searchQuery: ''
 };
 
@@ -17,7 +18,8 @@ const mockItems = {
         location: 'São Paulo, SP',
         date: '2 dias atrás',
         donor: 'Maria Silva',
-        image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500'
+        image: 'img/sofa.png',
+        status: 'available'
     },
     '2': {
         title: 'Notebook Dell i5',
@@ -26,7 +28,8 @@ const mockItems = {
         location: 'Rio de Janeiro, RJ',
         date: '1 dia atrás',
         donor: 'João Santos',
-        image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500'
+        image: 'img/notebook.jfif',
+        status: 'available'
     },
     '3': {
         title: 'Roupas Infantis',
@@ -35,7 +38,8 @@ const mockItems = {
         location: 'Belo Horizonte, MG',
         date: '3 dias atrás',
         donor: 'Ana Costa',
-        image: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=500'
+        image: 'img/roupas.jfif',
+        status: 'available'
     },
     '4': {
         title: 'Mesa de Jantar',
@@ -44,7 +48,8 @@ const mockItems = {
         location: 'Curitiba, PR',
         date: '5 dias atrás',
         donor: 'Carlos Oliveira',
-        image: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?w=500'
+        image: 'img/mesa.jfif',
+        status: 'donated' // Exemplo de item já doado
     },
     '5': {
         title: 'Furadeira Elétrica',
@@ -53,7 +58,8 @@ const mockItems = {
         location: 'Porto Alegre, RS',
         date: '1 semana atrás',
         donor: 'Pedro Lima',
-        image: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=500'
+        image: 'img/furadeira.jfif',
+        status: 'available'
     },
     '6': {
         title: 'Jogo de Panelas',
@@ -62,7 +68,8 @@ const mockItems = {
         location: 'Salvador, BA',
         date: '4 dias atrás',
         donor: 'Beatriz Souza',
-        image: 'https://images.unsplash.com/photo-1584990347449-39b4aa16f730?w=500'
+        image: 'img/panelas.jpg',
+        status: 'available'
     },
     '7': {
         title: 'Bicicleta Caloi',
@@ -71,7 +78,8 @@ const mockItems = {
         location: 'Fortaleza, CE',
         date: '2 dias atrás',
         donor: 'Rafael Martins',
-        image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=500'
+        image: 'img/bicicleta.jpg',
+        status: 'available'
     },
     '8': {
         title: 'Tablet Samsung',
@@ -80,8 +88,14 @@ const mockItems = {
         location: 'Brasília, DF',
         date: '6 dias atrás',
         donor: 'Fernanda Alves',
-        image: 'https://images.unsplash.com/photo-1561154464-82e9adf32764?w=500'
+        image: 'img/tablet.jfif',
+        status: 'available'
     }
+};
+const mockUserActivity = {
+    myDonations: ['4', '6'], // IDs dos itens que o usuário doou
+    receivedItems: ['7'],    // IDs dos itens que o usuário recebeu
+    favorites: ['1', '2', '8'] // IDs dos itens que o usuário favoritou
 };
 
 // ==================== FUNÇÕES AUXILIARES ====================
@@ -130,6 +144,26 @@ function navigateTo(screen, itemId = null) {
         if (footer) {
             footer.style.display = screensWithFooter.includes(screen) ? 'block' : 'none';
         }
+
+        // Hack para centralizar o título do perfil
+        if (screen === 'profile') {
+            const backBtn = document.getElementById('profile-back-btn');
+            const spacer = document.getElementById('header-right-spacer');
+            // Garante que o spacer tenha a mesma largura do botão de voltar
+            if (backBtn && spacer) spacer.style.width = `${backBtn.offsetWidth}px`;
+        }
+
+        // Carregar dados das telas de atividades
+        if (screen === 'my-donations') {
+            renderMyDonations();
+        } else if (screen === 'received-items') {
+            renderActivityList('receivedItems', 'received-items-grid', 'received-items-empty');
+        } else if (screen === 'favorites') {
+            renderActivityList('favorites', 'favorites-grid', 'favorites-empty');
+        } else if (screen === 'edit-donation') {
+            loadDonationForEdit(itemId);
+        }
+
     }
 }
 
@@ -147,9 +181,121 @@ function loadItemDetail(itemId) {
     document.getElementById('detail-image').alt = item.title;
 }
 
+function loadDonationForEdit(itemId) {
+    const item = mockItems[itemId];
+    if (!item) return;
+
+    document.getElementById('edit-title').value = item.title;
+    document.getElementById('edit-category').value = item.category;
+    document.getElementById('edit-description').value = item.description;
+
+    const form = document.getElementById('edit-donation-form');
+    // Remove o listener antigo para evitar múltiplos envios
+    form.replaceWith(form.cloneNode(true)); 
+    document.getElementById('edit-donation-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Atualiza os dados do item (simulação)
+        mockItems[itemId].title = document.getElementById('edit-title').value;
+        mockItems[itemId].category = document.getElementById('edit-category').value;
+        mockItems[itemId].description = document.getElementById('edit-description').value;
+        showToast('Anúncio atualizado com sucesso!');
+        navigateTo('my-donations');
+    });
+}
+
+function renderMyDonations() {
+    const statusFilter = AppState.myDonationsStatusFilter;
+    const filteredIds = mockUserActivity.myDonations.filter(id => mockItems[id].status === statusFilter);
+    const emptyMessageText = statusFilter === 'available' 
+        ? 'Você não tem doações em andamento.' 
+        : 'Você ainda não concluiu nenhuma doação.';
+    
+    renderActivityList('myDonations', 'my-donations-grid', 'my-donations-empty', filteredIds, emptyMessageText);
+}
+
+function renderActivityList(activityType, gridId, emptyMessageId, itemIdsOverride = null, emptyMessageText = null) {
+    const grid = document.getElementById(gridId);
+    const emptyMessage = document.getElementById(emptyMessageId);
+    const itemIds = itemIdsOverride || mockUserActivity[activityType];
+
+    grid.innerHTML = ''; // Limpa a grade antes de renderizar
+
+    if (itemIds && itemIds.length > 0) {
+        emptyMessage.classList.add('hidden');
+        grid.classList.remove('hidden');
+        itemIds.forEach(id => {
+            const item = mockItems[id];
+            if (item) {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.setAttribute('data-id', id);
+                card.setAttribute('data-category', item.category);
+
+                let actionsHTML = '';
+                let donatedOverlay = '';
+
+                if (activityType === 'myDonations') {
+                    if (item.status === 'donated') {
+                        card.classList.add('donated');
+                        donatedOverlay = `<div class="donated-overlay"><i class="fas fa-check-circle"></i> Concluído</div>`;
+                    } else {
+                        actionsHTML = `
+                            <div class="item-card-actions">
+                                <button class="btn btn-secondary edit-btn" data-id="${id}">Editar</button>
+                                <button class="btn btn-primary mark-donated-btn" data-id="${id}">Marcar como Doado</button>
+                            </div>
+                        `;
+                    }
+                }
+
+                card.innerHTML = `
+                    ${donatedOverlay}
+                    <img src="${item.image}" alt="${item.title}" class="item-image">
+                    <div class="item-content">
+                        <h4 class="item-title">${item.title}</h4>
+                        <p class="item-description">${item.description.substring(0, 60)}...</p>
+                        <div class="item-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> ${item.location}</span>
+                            <span class="item-category">${item.category}</span>
+                        </div>
+                    </div>
+                    ${actionsHTML}
+                `;
+                // Adiciona evento de clique no card, exceto nos botões
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('button')) {
+                        navigateTo('item-detail', id);
+                    }
+                });
+                grid.appendChild(card);
+            }
+        });
+
+        // Adiciona listeners para os novos botões
+        grid.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const itemId = e.currentTarget.getAttribute('data-id');
+                navigateTo('edit-donation', itemId);
+            });
+        });
+
+        grid.querySelectorAll('.mark-donated-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const itemId = e.currentTarget.getAttribute('data-id');
+                openMarkAsDonatedModal(itemId);
+            });
+        });
+    } else {
+        // Mostra a mensagem de estado vazio se não houver itens
+        grid.classList.add('hidden');
+        if (emptyMessageText) emptyMessage.textContent = emptyMessageText;
+        emptyMessage.classList.remove('hidden');
+    }
+}
+
 function filterItems() {
     const searchQuery = AppState.searchQuery.toLowerCase();
-    const category = AppState.selectedCategory;
+    const category = AppState.homeCategoryFilter;
     
     document.querySelectorAll('.item-card').forEach(card => {
         const cardCategory = card.getAttribute('data-category');
@@ -202,6 +348,87 @@ function logout() {
     navigateTo('login');
     showToast('Logout realizado com sucesso!');
 }
+
+function openMarkAsDonatedModal(itemId) {
+    const title = 'Confirmar Doação';
+    const content = `
+        <p>Que ótima notícia! Para finalizar, informe quem recebeu este item.</p>
+        <form id="mark-donated-form">
+            <div class="form-group">
+                <label for="recipient-name">Nome do Receptor</label>
+                <input type="text" id="recipient-name" placeholder="Nome de quem recebeu" required>
+            </div>
+            <div class="form-group" style="margin-top: 24px;">
+                <button type="submit" class="btn btn-primary">Concluir Doação</button>
+            </div>
+        </form>
+    `;
+    openModal(title, content);
+
+    document.getElementById('mark-donated-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        mockItems[itemId].status = 'donated';
+        closeModal();
+        showToast('Doação concluída com sucesso!');
+        // Re-renderiza a lista para mostrar o status atualizado
+        renderMyDonations();
+    });
+}
+
+function openModal(title, content) {
+    const modal = document.getElementById('generic-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+
+    if (modal && modalTitle && modalBody) {
+        modalTitle.textContent = title;
+        modalBody.innerHTML = content;
+        modal.classList.remove('hidden');
+    }
+}
+
+function closeModal() {
+    const modal = document.getElementById('generic-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+}
+
+const modalContent = {
+    about: `
+        <h4>O que é o DoaAí?</h4>
+        <p>O DoaAí é uma aplicação desenvolvida com o intuito de simplificar e organizar o processo de doação, criando um ambiente seguro, transparente e acessível para doadores e receptores.</p>
+        <p>Nossa missão é conectar, de forma direta e estruturada, pessoas dispostas a doar itens em bom estado com famílias que necessitam desses recursos, combatendo o desperdício e promovendo a solidariedade.</p>
+    `,
+    terms: `
+        <h4>1. Aceitação dos Termos</h4>
+        <p>Ao usar o DoaAí, você concorda com estes Termos de Uso. Se não concordar, não utilize a plataforma.</p>
+        <h4>2. Responsabilidade</h4>
+        <p>O DoaAí é uma plataforma de intermediação. Não nos responsabilizamos pela qualidade, segurança ou legalidade dos itens doados, nem pela veracidade das informações dos usuários. Toda a negociação, entrega e retirada é de responsabilidade exclusiva dos usuários envolvidos.</p>
+        <h4>3. Conduta do Usuário</h4>
+        <p>É proibido solicitar pagamento por itens doados, usar a plataforma para fins ilegais ou publicar conteúdo ofensivo. Contas que violarem estas regras serão suspensas.</p>
+    `,
+    notifications: `
+        <div class="setting-item">
+            <span>Novas mensagens no chat</span>
+            <label class="switch"><input type="checkbox" checked> <span class="slider"></span></label>
+        </div>
+        <div class="setting-item">
+            <span>Interesse em seus itens</span>
+            <label class="switch"><input type="checkbox" checked> <span class="slider"></span></label>
+        </div>
+        <div class="setting-item">
+            <span>Novidades da plataforma</span>
+            <label class="switch"><input type="checkbox"> <span class="slider"></span></label>
+        </div>
+    `,
+    privacy: `
+        <div class="setting-item">
+            <span>Tornar meu perfil privado</span>
+            <label class="switch"><input type="checkbox"> <span class="slider"></span></label>
+        </div>
+    `
+};
 
 // ==================== EVENT LISTENERS ====================
 function setupEventListeners() {
@@ -290,7 +517,7 @@ function setupEventListeners() {
         card.addEventListener('click', () => {
             document.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
             card.classList.add('active');
-            AppState.selectedCategory = card.getAttribute('data-category');
+            AppState.homeCategoryFilter = card.getAttribute('data-category');
             filterItems();
         });
     });
@@ -303,6 +530,17 @@ function setupEventListeners() {
         });
     });
     
+    // Abas de Minhas Doações
+    document.querySelectorAll('#my-donations-filter .tab-button').forEach(button => {
+        button.addEventListener('click', () => {
+            document.querySelectorAll('#my-donations-filter .tab-button').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            const status = button.getAttribute('data-status');
+            AppState.myDonationsStatusFilter = status;
+            renderMyDonations();
+        });
+    });
+
     // Chat items
     document.querySelectorAll('.chat-list-item').forEach(item => {
         item.addEventListener('click', () => {
@@ -402,6 +640,123 @@ function setupEventListeners() {
 
             navigateTo('login');
         });
+    }
+
+    // Botões do modal (Sobre e Termos)
+    const aboutBtn = document.getElementById('about-btn');
+    if (aboutBtn) {
+        aboutBtn.addEventListener('click', () => openModal('Sobre o DoaAí', modalContent.about));
+    }
+
+    const termsBtn = document.getElementById('terms-btn');
+    if (termsBtn) {
+        termsBtn.addEventListener('click', () => openModal('Termos de Uso', modalContent.terms));
+    }
+
+    // Botões do modal (Configurações)
+    const notificationsBtn = document.getElementById('notifications-btn');
+    if (notificationsBtn) {
+        notificationsBtn.addEventListener('click', () => openModal('Notificações', modalContent.notifications));
+    }
+
+    const privacyBtn = document.getElementById('privacy-btn');
+    if (privacyBtn) {
+        privacyBtn.addEventListener('click', () => openModal('Privacidade', modalContent.privacy));
+    }
+
+    // Botão para abrir modal de alterar senha
+    const changePasswordBtn = document.getElementById('change-password-btn');
+    if (changePasswordBtn) {
+        changePasswordBtn.addEventListener('click', () => {
+            const title = 'Alterar Senha';
+            const content = `
+                <form id="change-password-modal-form">
+                    <div class="form-group">
+                        <label>Senha Atual</label>
+                        <input type="password" id="modal-current-password" placeholder="Sua senha atual" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nova Senha</label>
+                        <input type="password" id="modal-new-password" placeholder="Mínimo 6 caracteres" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirmar Nova Senha</label>
+                        <input type="password" id="modal-new-password-confirm" placeholder="Confirme a nova senha" required>
+                    </div>
+                    <div class="form-group" style="margin-top: 24px;">
+                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                    </div>
+                </form>
+            `;
+            openModal(title, content);
+
+            document.getElementById('change-password-modal-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const newPass = document.getElementById('modal-new-password').value;
+                const newPassConfirm = document.getElementById('modal-new-password-confirm').value;
+
+                if (newPass.length < 6) return showToast('A nova senha deve ter no mínimo 6 caracteres.', 'error');
+                if (newPass !== newPassConfirm) return showToast('As novas senhas não coincidem.', 'error');
+
+                closeModal();
+                showToast('Senha alterada com sucesso!');
+            });
+        });
+    }
+
+    // Ações de conta (Desativar/Excluir)
+    function handleAccountAction(action) {
+        const isDeletion = action === 'delete';
+        const title = isDeletion ? 'Excluir Conta' : 'Desativar Conta';
+        const message = isDeletion 
+            ? 'Esta ação é irreversível. Todos os seus dados, doações e conversas serão permanentemente apagados.' 
+            : 'Sua conta será desativada e seu perfil não será mais visível. Você poderá reativá-la fazendo login novamente.';
+
+        const content = `
+            <p>${message}</p>
+            <p>Para confirmar, por favor, digite sua senha abaixo.</p>
+            <form id="account-action-form">
+                <div class="form-group">
+                    <label for="action-password">Senha</label>
+                    <input type="password" id="action-password" placeholder="Sua senha" required>
+                </div>
+                <div class="form-group" style="margin-top: 24px;">
+                    <button type="submit" class="btn btn-primary">${title}</button>
+                </div>
+            </form>
+        `;
+        openModal(title, content);
+
+        // Adiciona o listener para o formulário recém-criado
+        const actionForm = document.getElementById('account-action-form');
+        actionForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const password = document.getElementById('action-password').value;
+            if (!password) {
+                return showToast('Por favor, informe sua senha.', 'error');
+            }
+            // Simulação de sucesso
+            closeModal();
+            const successMessage = isDeletion ? 'Conta excluída com sucesso!' : 'Conta desativada com sucesso!';
+            showToast(successMessage);
+            setTimeout(logout, 500); // Atraso para o usuário ver o toast
+        });
+    }
+
+    const deactivateBtn = document.getElementById('deactivate-account-btn');
+    deactivateBtn?.addEventListener('click', () => handleAccountAction('deactivate'));
+
+    const deleteBtn = document.getElementById('delete-account-btn');
+    deleteBtn?.addEventListener('click', () => handleAccountAction('delete'));
+
+    // Fechar modal
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', closeModal);
+    }
+    const modalOverlay = document.getElementById('generic-modal');
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', (e) => e.target === modalOverlay && closeModal());
     }
 }
 
