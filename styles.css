@@ -826,7 +826,7 @@ body {
     color: rgba(255, 255, 255, 0.9);
 }
 
-#donate-screen .header h3, #chat-screen .header h3, #profile-screen .header h3 {
+#donate-screen .header h3, #chat-screen .header h3, #profile-screen .header h3, #received-items-screen .header h3, #favorites-screen .header h3 {
     color: white;
     flex-grow: 1; /* Faz o título ocupar o espaço do meio */
     text-align: center; /* Centraliza o texto dentro desse espaço */
@@ -835,8 +835,10 @@ body {
 #chat-screen .header,
 #profile-screen .header,
 #donate-screen .header,
-#edit-donation-screen .header,
-#my-donations-screen .header {
+#edit-donation-screen .header, 
+#my-donations-screen .header,
+#received-items-screen .header,
+#favorites-screen .header {
     padding: var(--spacing-md) 0;
     /* restaura padding-top e padding-bottom originais */
 }
@@ -1317,27 +1319,6 @@ input:checked+.slider:before {
 
 /* Responsivo */
 @media (max-width: 768px) {
-    .chat-container {
-        flex-direction: column;
-    }
-
-    .chat-list {
-        width: 100%;
-        display: none;
-    }
-
-    .chat-list.active {
-        display: block;
-    }
-
-    .chat-window {
-        display: none;
-    }
-
-    .chat-window.active {
-        display: flex;
-    }
-
     .categories {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1364,5 +1345,55 @@ input:checked+.slider:before {
 
     .splash-screen p {
         font-size: 1.2rem;
+    }
+}
+
+/* Adicionado para responsividade do Chat */
+
+/* Por padrão, o botão de voltar no chat fica escondido em telas grandes */
+.chat-back-btn {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    /*
+     * Esconde a janela de chat por padrão em telas móveis.
+     * A lista de conversas (.chat-list) permanece visível.
+    */
+    #chat-screen .chat-window {
+        display: none;
+    }
+
+    /* Mostra a janela de chat quando ela tem a classe 'active' */
+    #chat-screen .chat-window.active {
+        display: flex;
+    }
+    /*
+     * Transforma o container do chat para ocupar a tela inteira e se comportar
+     * como um bloco, permitindo que a lista ou a janela de chat apareçam
+     * uma de cada vez.
+    */
+    #chat-screen .chat-container {
+        display: block;
+        height: calc(100vh - 125px); /* Ajusta a altura para preencher a tela abaixo do header */
+    }
+
+    #chat-screen .chat-list,
+    #chat-screen .chat-window {
+        width: 100%;
+        height: 100%;
+        border-left: none; /* Remove a borda lateral no modo mobile */
+    }
+
+    /* Esconde a lista de conversas quando a janela de chat está ativa */
+    #chat-screen .chat-list.mobile-hidden {
+        display: none;
+    }
+
+    /* Mostra o botão de voltar (ícone de seta) apenas em telas móveis */
+    .chat-header .chat-back-btn {
+        display: block;
+        color: var(--text-primary);
+        margin-right: 10px;
     }
 }
