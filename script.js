@@ -5,11 +5,11 @@ const AppState = {
     currentUser: null,
     selectedItemId: null,
     homeCategoryFilter: 'all',
-    myDonationsStatusFilter: 'available', // 'available' ou 'donated'
+    myDonationsStatusFilter: 'available', // 'available' ou 'donated' = "doado"
     searchQuery: ''
 };
 
-// ==================== DADOS SIMULADOS ====================
+// -------------------- DADOS SIMULADOS nos CARDS ----------------------------
 const mockItems = {
     '1': {
         title: 'Sofá 3 Lugares',
@@ -92,14 +92,14 @@ const mockItems = {
         status: 'available'
     }
 };
-const mockUserActivity = {
+const mockUserActivity = { // Simulação de atividades do usuário
     myDonations: ['4', '6'], // IDs dos itens que o usuário doou
     receivedItems: ['7'],    // IDs dos itens que o usuário recebeu
     favorites: ['1', '2', '8'] // IDs dos itens que o usuário favoritou
 };
 
 // ==================== FUNÇÕES AUXILIARES ====================
-function showToast(message, type = 'success') {
+function showToast(message, type = 'success') { 
     const container = document.getElementById('toast-container');
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
@@ -162,6 +162,11 @@ function navigateTo(screen, itemId = null) {
             renderActivityList('favorites', 'favorites-grid', 'favorites-empty');
         } else if (screen === 'edit-donation') {
             loadDonationForEdit(itemId);
+        }
+
+        // Rola para o topo se for a tela inicial
+        if (screen === 'home') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
     }
@@ -247,7 +252,7 @@ function renderActivityList(activityType, gridId, emptyMessageId, itemIdsOverrid
                         `;
                     }
                 }
-
+                // Conteúdo do card
                 card.innerHTML = `
                     ${donatedOverlay}
                     <img src="${item.image}" alt="${item.title}" class="item-image">
@@ -441,7 +446,7 @@ function setupEventListeners() {
         });
     });
     
-    // Login form
+    // formulario de Login
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
@@ -456,7 +461,7 @@ function setupEventListeners() {
         });
     }
     
-    // Register form
+    // formulario de cadastro
     const registerForm = document.getElementById('register-form');
     if (registerForm) {
         registerForm.addEventListener('submit', (e) => {
@@ -472,7 +477,7 @@ function setupEventListeners() {
         });
     }
     
-    // Donate form
+    // formulario de doação
     const donateForm = document.getElementById('donate-form');
     if (donateForm) {
         donateForm.addEventListener('submit', (e) => {
@@ -482,7 +487,7 @@ function setupEventListeners() {
         });
     }
     
-    // File upload
+    // File upload (subindo arquivos)
     const fileUpload = document.getElementById('file-upload');
     if (fileUpload) {
         fileUpload.addEventListener('change', (e) => {
@@ -503,7 +508,7 @@ function setupEventListeners() {
         });
     }
     
-    // Search input
+    // Search input (filtro de busca)
     const searchInput = document.getElementById('search-input');
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
@@ -512,7 +517,7 @@ function setupEventListeners() {
         });
     }
     
-    // Category filters
+    // Category filters (filtro por categoria)
     document.querySelectorAll('.category-card').forEach(card => {
         card.addEventListener('click', () => {
             document.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
@@ -522,7 +527,7 @@ function setupEventListeners() {
         });
     });
     
-    // Item cards
+    // Item cards 
     document.querySelectorAll('.item-card').forEach(card => {
         card.addEventListener('click', () => {
             const itemId = card.getAttribute('data-id');
@@ -549,7 +554,7 @@ function setupEventListeners() {
         });
     });
     
-    // Message send button
+    // Message send button 
     const sendBtn = document.getElementById('send-message-btn');
     if (sendBtn) {
         sendBtn.addEventListener('click', sendMessage);
@@ -574,7 +579,7 @@ function setupEventListeners() {
         });
     }
     
-    // Logout button
+    // Logout button (butão de sair)
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', logout);

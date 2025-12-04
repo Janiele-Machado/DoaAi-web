@@ -776,7 +776,7 @@ body {
     transition: all 0.3s ease;
 }
 
-}
+} /* não tirar essa chave!!! pois ao tirar estraga o css do menu de navegação superior, não me pergunte o pq, mas está acontecendo... */
 
 /* Top Navigation (added) */
 .top-nav {

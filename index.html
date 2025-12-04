@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DoaAi - Plataforma de Doações</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="shortcut icon" href="img/favicon-doaAi.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><!-- Ícones FontAwesome -->
 </head>
+
 <body>
     <!-- Container principal da aplicação -->
     <div id="app">
-        
-    <!-- ==================== TELA SPLASH ==================== -->
+
+        <!-- ==================== TELA SPLASH ==================== -->
         <div id="splash-screen" class="splash-screen hidden">
             <h1>DoaAí</h1>
             <p>Conectando doações com quem precisa</p>
             <div class="spinner"></div>
         </div>
 
-    <!-- ==================== TELA DE LOGIN ==================== -->
+        <!-- ==================== TELA DE LOGIN ==================== -->
         <div id="login-screen" class="auth-screen hidden">
             <div class="login-logo-container">
                 <img src="img/logo.png" alt="Logo do DoaAí" class="login-logo">
             </div>
             <div class="auth-card auth-card--small">
                 <p class="subtitle">Faça login para continuar</p>
-                
+
                 <form id="login-form">
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" id="login-email" placeholder="seu@email.com" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label>Senha</label>
                         <input type="password" id="login-password" placeholder="••••••••" required>
@@ -40,14 +42,14 @@
                     <div class="form-group small-link">
                         <a href="#" class="text-link" data-navigate="recover">Esqueceu a senha?</a>
                     </div>
-                    
+
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-sign-in-alt"></i>
                             Entrar
                         </button>
                     </div>
-                    
+
                     <div class="text-center">
                         <a href="#" class="text-link" data-navigate="register">
                             Não tem conta? Cadastre-se
@@ -57,45 +59,46 @@
             </div>
         </div>
 
-    <!-- ==================== TELA DE CADASTRO ==================== -->
+        <!-- ==================== TELA DE CADASTRO ==================== -->
         <div id="register-screen" class="auth-screen hidden">
             <div class="auth-card">
                 <h2>Criar Conta</h2>
                 <p class="subtitle">Junte-se à nossa comunidade de Doações</p>
-                
+
                 <form id="register-form">
                     <div class="form-group">
                         <label>Nome Completo</label>
                         <input type="text" id="register-name" placeholder="Seu nome" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" id="register-email" placeholder="seu@email.com" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label>Senha</label>
                         <input type="password" id="register-password" placeholder="Mínimo 6 caracteres" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label>Telefone</label>
                         <input type="tel" id="register-phone" placeholder="(00) 00000-0000">
                     </div>
-                    
+
                     <div class="form-group">
-                        <label>CPF <span style="font-weight:600; color:var(--text-secondary);">(não obrigatório)</span></label>
+                        <label>CPF <span style="font-weight:600; color:var(--text-secondary);">(não
+                                obrigatório)</span></label>
                         <input type="text" id="register-cpf" placeholder="000.000.000-00">
                     </div>
-                    
+
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-user-plus"></i>
                             Criar Conta
                         </button>
                     </div>
-                    
+
                     <div class="text-center">
                         <a href="#" class="text-link" data-navigate="login">
                             Já tem conta? Faça login
@@ -105,7 +108,7 @@
             </div>
         </div>
 
-    <!-- ==================== TELA DE RECUPERAÇÃO DE SENHA - passo 1: contato ==================== -->
+        <!-- ==================== TELA DE RECUPERAÇÃO DE SENHA - passo 1: contato ==================== -->
         <div id="recover-screen" class="auth-screen hidden">
             <div class="auth-card auth-card--small">
                 <h2>Recuperar Acesso</h2>
@@ -127,7 +130,7 @@
             </div>
         </div>
 
-    <!-- ==================== TELA DE RECUPERAÇÃO DE SENHA - passo 2: verificar código ==================== -->
+        <!-- ==================== TELA DE RECUPERAÇÃO DE SENHA - passo 2: verificar código ==================== -->
         <div id="recover-code-screen" class="auth-screen hidden">
             <div class="auth-card auth-card--small">
                 <h2>Verificar Código</h2>
@@ -147,7 +150,7 @@
             </div>
         </div>
 
-    <!-- ==================== TELA DE RECUPERAÇÃO DE SENHA - passo 3: redefinir senha ==================== -->
+        <!-- ==================== TELA DE RECUPERAÇÃO DE SENHA - passo 3: redefinir senha ==================== -->
         <div id="reset-password-screen" class="auth-screen hidden">
             <div class="auth-card auth-card--small">
                 <h2>Redefinir Senha</h2>
@@ -168,14 +171,14 @@
             </div>
         </div>
 
-    <!-- ==================== TELA INICIAL (HOME) ==================== -->
+        <!-- ==================== TELA INICIAL (HOME) ==================== -->
         <div id="home-screen" class="hidden">
             <header class="header">
                 <div class="container header-content">
                     <div class="logo">
                         <img src="img/logo.png" alt="DoaAi" class="site-logo">
                     </div>
-        
+
                 </div>
                 <!-- Navegação superior com as principais seções do app-->
                 <nav class="top-nav">
@@ -184,7 +187,7 @@
                             <i class="fas fa-house"></i>
                             <span>Início</span>
                         </button>
-                      
+
                         <button class="nav-item" data-navigate="donate">
                             <i class="fas fa-plus-circle"></i>
                             <span>Doar</span>
@@ -200,17 +203,13 @@
                     </div>
                 </nav>
             </header>
-            
+
             <div class="container search-section">
                 <div class="search-bar">
                     <i class="fas fa-search"></i>
-                    <input 
-                        type="text" 
-                        id="search-input"
-                        placeholder="Buscar doações..." 
-                    >
+                    <input type="text" id="search-input" placeholder="Buscar doações...">
                 </div>
-                
+
                 <div class="categories" id="categories">
                     <div class="category-card active" data-category="all">
                         <div class="category-icon">
@@ -256,7 +255,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="container">
                 <div class="items-section">
                     <h3>Doações Disponíveis</h3>
@@ -273,20 +272,21 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Item 2 -->
                         <div class="item-card" data-id="2" data-category="Eletrônicos">
                             <img src="img/notebook.jfif" alt="Notebook Dell i5" class="item-image">
                             <div class="item-content">
                                 <h4 class="item-title">Notebook Dell i5</h4>
-                                <p class="item-description">Notebook funcionando perfeitamente, apenas com algumas marcas de uso</p>
+                                <p class="item-description">Notebook funcionando perfeitamente, apenas com algumas
+                                    marcas de uso</p>
                                 <div class="item-meta">
                                     <span><i class="fas fa-map-marker-alt"></i> Rio de Janeiro, RJ</span>
                                     <span class="item-category">Eletrônicos</span>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Item 3 -->
                         <div class="item-card" data-id="3" data-category="Vestuário">
                             <img src="img/roupas.jfif" alt="Roupas Infantis" class="item-image">
@@ -299,7 +299,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Item 4 -->
                         <div class="item-card" data-id="4" data-category="Móveis">
                             <img src="img/mesa.jfif" alt="Mesa de Jantar" class="item-image">
@@ -312,7 +312,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Item 5 -->
                         <div class="item-card" data-id="5" data-category="Ferramentas">
                             <img src="img/furadeira.jfif" alt="Furadeira Elétrica" class="item-image">
@@ -325,7 +325,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Item 6 -->
                         <div class="item-card" data-id="6" data-category="Utensílios">
                             <img src="img/panelas.jpg" alt="Jogo de Panelas" class="item-image">
@@ -338,7 +338,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Item 7 -->
                         <div class="item-card" data-id="7" data-category="Outros">
                             <img src="img/bicicleta.jpg" alt="Bicicleta Caloi" class="item-image">
@@ -351,7 +351,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Item 8 -->
                         <div class="item-card" data-id="8" data-category="Eletrônicos">
                             <img src="img/tablet.jfif" alt="Tablet Samsung" class="item-image">
@@ -367,14 +367,14 @@
                     </div>
                 </div>
             </div>
-            
+
             <button class="fab" data-navigate="donate">
                 <i class="fas fa-plus"></i>
             </button>
-        
+
         </div>
 
-    <!-- ==================== TELA DE DETALHE DO ITEM ==================== -->
+        <!-- ==================== TELA DE DETALHE DO ITEM ==================== -->
         <div id="item-detail-screen" class="hidden">
             <header class="header">
                 <div class="container header-content">
@@ -391,16 +391,16 @@
                     </div>
                 </div>
             </header>
-            
+
             <div class="item-detail-container">
                 <img id="detail-image" src="" alt="" class="item-detail-image">
-                
+
                 <div class="item-detail-card">
                     <div class="item-detail-header">
                         <h2 class="item-detail-title" id="detail-title"></h2>
                         <span class="item-category" id="detail-category"></span>
                     </div>
-                    
+
                     <div class="item-detail-meta">
                         <div class="meta-item">
                             <i class="fas fa-user"></i>
@@ -415,12 +415,12 @@
                             <span id="detail-date"></span>
                         </div>
                     </div>
-                    
+
                     <div class="item-detail-description">
                         <h3>Descrição</h3>
                         <p id="detail-description"></p>
                     </div>
-                    
+
                     <div class="item-detail-actions">
                         <button class="btn btn-primary" id="contact-btn">
                             <i class="fas fa-message"></i>
@@ -435,7 +435,7 @@
             </div>
         </div>
 
-    <!-- ==================== TELA DE DOAÇÃO (DOAR) ==================== -->
+        <!-- ==================== TELA DE DOAÇÃO (DOAR) ==================== -->
         <div id="donate-screen" class="hidden">
             <header class="header">
                 <div class="container header-content">
@@ -446,11 +446,11 @@
                     <div></div>
                 </div>
             </header>
-            
+
             <div class="settings-container">
                 <div class="settings-card">
                     <h3>Informações do Item</h3>
-                    
+
                     <form id="donate-form">
                         <div class="form-group">
                             <label>Fotos do Item</label>
@@ -461,12 +461,12 @@
                             </div>
                             <div id="preview-container" class="preview-images"></div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label>Título</label>
                             <input type="text" placeholder="Ex: Sofá 3 lugares" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label>Categoria</label>
                             <select required>
@@ -479,17 +479,18 @@
                                 <option value="Outros">Outros</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label>Descrição</label>
-                            <textarea rows="4" placeholder="Descreva o item, estado de conservação, etc." required></textarea>
+                            <textarea rows="4" placeholder="Descreva o item, estado de conservação, etc."
+                                required></textarea>
                         </div>
-                        
+
                         <div class="form-group">
                             <label>Localização</label>
                             <input type="text" placeholder="Cidade, Estado" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">
                                 <i class="fas fa-gift"></i>
@@ -501,7 +502,7 @@
             </div>
         </div>
 
-    <!-- ==================== TELA DE CHAT ==================== -->
+        <!-- ==================== TELA DE CHAT ==================== -->
         <div id="chat-screen" class="hidden">
             <header class="header">
                 <div class="container header-content">
@@ -512,13 +513,13 @@
                     <div></div>
                 </div>
             </header>
-            
+
             <div class="chat-container">
                 <div class="chat-list">
                     <div class="chat-list-header">
                         <h3>Conversas</h3>
                     </div>
-                    
+
                     <div class="chat-list-item active" data-chat="1">
                         <div class="chat-avatar">M</div>
                         <div class="chat-info">
@@ -527,7 +528,7 @@
                         </div>
                         <div class="chat-time">10:30</div>
                     </div>
-                    
+
                     <div class="chat-list-item" data-chat="2">
                         <div class="chat-avatar">J</div>
                         <div class="chat-info">
@@ -536,7 +537,7 @@
                         </div>
                         <div class="chat-time">09:15</div>
                     </div>
-                    
+
                     <div class="chat-list-item" data-chat="3">
                         <div class="chat-avatar">A</div>
                         <div class="chat-info">
@@ -545,7 +546,7 @@
                         </div>
                         <div class="chat-time">Ontem</div>
                     </div>
-                    
+
                     <div class="chat-list-item" data-chat="4">
                         <div class="chat-avatar">C</div>
                         <div class="chat-info">
@@ -554,7 +555,7 @@
                         </div>
                         <div class="chat-time">Ontem</div>
                     </div>
-                    
+
                     <div class="chat-list-item" data-chat="5">
                         <div class="chat-avatar">P</div>
                         <div class="chat-info">
@@ -563,7 +564,7 @@
                         </div>
                         <div class="chat-time">2 dias atrás</div>
                     </div>
-                    
+
                     <div class="chat-list-item" data-chat="6">
                         <div class="chat-avatar">B</div>
                         <div class="chat-info">
@@ -573,7 +574,7 @@
                         <div class="chat-time">3 dias atrás</div>
                     </div>
                 </div>
-                
+
                 <div class="chat-window">
                     <div class="chat-header">
                         <div class="chat-avatar">M</div>
@@ -582,7 +583,7 @@
                             <div class="chat-preview">Online</div>
                         </div>
                     </div>
-                    
+
                     <div class="chat-messages" id="chat-messages">
                         <div class="message received">
                             <div class="message-bubble">
@@ -591,20 +592,20 @@
                             </div>
                         </div>
 
-                          <div class="message received">
+                        <div class="message received">
                             <div class="message-bubble">
                                 <div>O sofá ainda está disponível?</div>
                                 <div class="message-time">10:25</div>
                             </div>
                         </div>
-                        
+
                         <div class="message sent">
                             <div class="message-bubble">
                                 <div>Olá! Sim, ainda está disponível</div>
                                 <div class="message-time">10:27</div>
                             </div>
                         </div>
-                        
+
                         <div class="message sent">
                             <div class="message-bubble">
                                 <div>Sim! Quando você pode vir buscar?</div>
@@ -612,14 +613,9 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="chat-input-container">
-                        <input 
-                            type="text" 
-                            class="chat-input" 
-                            placeholder="Digite uma mensagem..."
-                            id="message-input"
-                        >
+                        <input type="text" class="chat-input" placeholder="Digite uma mensagem..." id="message-input">
                         <button class="send-btn" id="send-message-btn">
                             <i class="fas fa-paper-plane"></i>
                         </button>
@@ -628,7 +624,7 @@
             </div>
         </div>
 
-    <!-- ==================== TELA DE PERFIL ==================== -->
+        <!-- ==================== TELA DE PERFIL ==================== -->
         <div id="profile-screen" class="hidden">
             <header class="header">
                 <div class="container header-content">
@@ -646,7 +642,7 @@
                 <h2 class="profile-name">Usuário</h2>
                 <p class="profile-email">usuario@email.com</p>
             </div>
-            
+
             <div class="profile-content">
                 <div class="profile-section">
                     <h3>Minhas Atividades</h3>
@@ -674,7 +670,7 @@
                         </li>
                     </ul>
                 </div>
-                
+
                 <div class="profile-section">
                     <h3>Configurações</h3>
                     <ul class="profile-menu">
@@ -700,22 +696,22 @@
                             <i class="fas fa-chevron-right"></i>
                         </li>
                         <li class="profile-menu-item" id="deactivate-account-btn">
-                                <div>
-                                    <i class="fas fa-user-slash"></i>
-                                    <span>Desativar Conta</span>
-                                </div>
-                                <i class="fas fa-chevron-right"></i>
-                            </li>
-                            <li class="profile-menu-item" id="delete-account-btn">
-                                <div>
-                                    <i class="fas fa-trash-can"></i>
-                                    <span>Excluir Conta</span>
-                                </div>
-                                <i class="fas fa-chevron-right"></i>
-                            </li>
-                        </ul>
-                    </div>
-                
+                            <div>
+                                <i class="fas fa-user-slash"></i>
+                                <span>Desativar Conta</span>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                        <li class="profile-menu-item" id="delete-account-btn">
+                            <div>
+                                <i class="fas fa-trash-can"></i>
+                                <span>Excluir Conta</span>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                    </ul>
+                </div>
+
                 <div class="profile-section">
                     <h3>Sobre</h3>
                     <ul class="profile-menu">
@@ -735,16 +731,16 @@
                         </li>
                     </ul>
                 </div>
-                
+
                 <button class="btn btn-primary" id="logout-btn">
                     <i class="fas fa-right-from-bracket"></i>
                     Sair
                 </button>
             </div>
-            
+
         </div>
 
-    <!-- ==================== TELA MINHAS DOAÇÕES ==================== -->
+        <!-- ==================== TELA MINHAS DOAÇÕES ==================== -->
         <div id="my-donations-screen" class="hidden">
             <header class="header">
                 <div class="container header-content">
@@ -761,11 +757,12 @@
             </header>
             <div class="container" id="my-donations-content">
                 <div class="items-grid" id="my-donations-grid"></div>
-                <p id="my-donations-empty" class="empty-state-message hidden">Você ainda não publicou nenhuma doação.</p>
+                <p id="my-donations-empty" class="empty-state-message hidden">Você ainda não publicou nenhuma doação.
+                </p>
             </div>
         </div>
 
-    <!-- ==================== TELA ITENS RECEBIDOS ==================== -->
+        <!-- ==================== TELA ITENS RECEBIDOS ==================== -->
         <div id="received-items-screen" class="hidden">
             <header class="header">
                 <div class="container header-content">
@@ -780,11 +777,12 @@
                 <div class="items-grid" id="received-items-grid" style="padding-top: 24px;">
                     <!-- Itens recebidos serão inseridos aqui -->
                 </div>
-                <p id="received-items-empty" class="empty-state-message hidden">Você ainda não marcou nenhum item como recebido.</p>
+                <p id="received-items-empty" class="empty-state-message hidden">Você ainda não marcou nenhum item como
+                    recebido.</p>
             </div>
         </div>
 
-    <!-- ==================== TELA FAVORITOS ==================== -->
+        <!-- ==================== TELA FAVORITOS ==================== -->
         <div id="favorites-screen" class="hidden">
             <header class="header">
                 <div class="container header-content">
@@ -803,7 +801,7 @@
             </div>
         </div>
 
-    <!-- ==================== TELA DE EDIÇÃO DE DOAÇÃO ==================== -->
+        <!-- ==================== TELA DE EDIÇÃO DE DOAÇÃO ==================== -->
         <div id="edit-donation-screen" class="hidden">
             <header class="header">
                 <div class="container header-content">
@@ -848,7 +846,7 @@
             </div>
         </div>
 
-    <!-- ==================== MODAL GENÉRICO ==================== -->
+        <!-- ==================== MODAL GENÉRICO ==================== -->
         <div id="generic-modal" class="modal-overlay hidden">
             <div class="modal-content fadeInUp">
                 <div class="modal-header">
@@ -880,4 +878,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
