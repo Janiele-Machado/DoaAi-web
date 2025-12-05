@@ -30,25 +30,21 @@ Com isso, promove-se a solidariedade, reduz-se o descarte inadequado e fortalece
 
 ## Telas do Projeto Front-End
 
-**Páginas Públicas**
+O projeto contempla as seguintes páginas, divididas por nível de acesso:
 
-- Página inicial/apresentação: apresenta a proposta, objetivos e benefícios da plataforma.
+### **Páginas Públicas (Acesso sem Login)**
 
-- Página de cadastro e login: possibilita a criação de contas e o acesso de usuários já registrados.
+* **Página inicial/apresentação:** Apresenta a proposta, objetivos e benefícios da plataforma.
+* **Página de cadastro e login:** Possibilita a criação de contas e o acesso de usuários já registrados.
+* **Listagem de itens disponíveis:** Exibe os itens anunciados, permitindo uma visualização básica mesmo sem login.
 
-- Listagem de itens disponíveis: exibe os itens anunciados, permitindo uma visualização básica mesmo sem login.
+### **Páginas Restritas (Após Autenticação)**
 
-**Páginas Restritas (após autenticação)**
-
-- Dashboard do usuário: centraliza informações do perfil, histórico de doações e solicitações.
-
-- Gerenciamento de itens (doador): permite cadastrar, editar e excluir anúncios de doações.
-
-- Solicitação de itens (receptor): possibilita manifestar interesse em determinado item.
-
-- Chat integrado: canal de comunicação direta para combinar entrega ou retirada.
-
-- Notificações: exibe alertas sobre novas mensagens, solicitações e atualizações de status.
+* **Dashboard do usuário:** Centraliza informações do perfil, histórico de doações e solicitações.
+* **Gerenciamento de itens (Doador):** Permite cadastrar, editar e excluir anúncios de doações.
+* **Solicitação de itens (Receptor):** Possibilita manifestar interesse em determinado item.
+* **Chat integrado:** Canal de comunicação direta para combinar entrega ou retirada.
+* **Notificações:** Exibe alertas sobre novas mensagens, solicitações e atualizações de status.
 
 ---
 
