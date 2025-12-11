@@ -212,10 +212,7 @@ body {
     transition: all 0.3s ease;
 }
 
-.form-group input:focus,
-.form-group textarea:focus,
-
-.form-group select:focus {
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
     outline: none;
     border-color: var(--primary);
 }
@@ -463,7 +460,7 @@ body {
     font-size: 0.9rem;
     margin-bottom: var(--spacing-md);
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    --webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     line-height: 1.5;
@@ -826,7 +823,7 @@ body {
     color: rgba(255, 255, 255, 0.9);
 }
 
-#donate-screen .header h3, #chat-screen .header h3, #profile-screen .header h3, #received-items-screen .header h3, #favorites-screen .header h3 {
+#donate-screen .header h3, #edit-donation-screen .header h3, #chat-screen .header h3, #profile-screen .header h3, #received-items-screen .header h3, #favorites-screen .header h3 {
     color: white;
     flex-grow: 1; /* Faz o título ocupar o espaço do meio */
     text-align: center; /* Centraliza o texto dentro desse espaço */
