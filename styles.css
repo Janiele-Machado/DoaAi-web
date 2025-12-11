@@ -254,6 +254,18 @@ body {
     color: white;
 }
 
+.btn-danger {
+    background: var(--danger);
+    color: white;
+    border: 2px solid var(--danger);
+}
+
+.btn-danger:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
 .btn-ghost {
     background: transparent;
     color: var(--text-secondary);
@@ -470,10 +482,12 @@ body {
     padding: 0 var(--spacing-md) var(--spacing-md) var(--spacing-md);
     display: flex;
     gap: var(--spacing-sm);
+    flex-wrap: wrap;
 }
 
 .item-card-actions .btn {
-    width: 100%;
+    flex: 1;
+    min-width: 70px;
     padding: 8px;
     font-size: 0.85rem;
 }

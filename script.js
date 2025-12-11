@@ -248,6 +248,7 @@ function renderActivityList(activityType, gridId, emptyMessageId, itemIdsOverrid
                             <div class="item-card-actions">
                                 <button class="btn btn-secondary edit-btn" data-id="${id}">Editar</button>
                                 <button class="btn btn-primary mark-donated-btn" data-id="${id}">Marcar como Doado</button>
+                                <button class="btn btn-danger delete-btn" data-id="${id}"><i class="fas fa-trash"></i> Excluir</button>
                             </div>
                         `;
                     }
@@ -288,6 +289,13 @@ function renderActivityList(activityType, gridId, emptyMessageId, itemIdsOverrid
             btn.addEventListener('click', (e) => {
                 const itemId = e.currentTarget.getAttribute('data-id');
                 openMarkAsDonatedModal(itemId);
+            });
+        });
+
+        grid.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const itemId = e.currentTarget.getAttribute('data-id');
+                openDeleteItemModal(itemId);
             });
         });
     } else {
@@ -376,6 +384,36 @@ function openMarkAsDonatedModal(itemId) {
         closeModal();
         showToast('Doação concluída com sucesso!');
         // Re-renderiza a lista para mostrar o status atualizado
+        renderMyDonations();
+    });
+}
+
+function openDeleteItemModal(itemId) {
+    const item = mockItems[itemId];
+    const title = 'Excluir Anúncio';
+    const content = `
+        <p>Tem certeza que deseja excluir este anúncio?</p>
+        <p><strong>${item.title}</strong></p>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 16px;">Esta ação não pode ser desfeita.</p>
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+            <button type="button" id="cancel-delete-btn" class="btn btn-secondary" style="flex: 1;">Cancelar</button>
+            <button type="button" id="confirm-delete-btn" class="btn btn-danger" style="flex: 1;">Excluir</button>
+        </div>
+    `;
+    openModal(title, content);
+
+    document.getElementById('cancel-delete-btn').addEventListener('click', closeModal);
+    document.getElementById('confirm-delete-btn').addEventListener('click', () => {
+        // Remove o item do mockItems
+        delete mockItems[itemId];
+        // Remove o item da lista de doações do usuário
+        const index = mockUserActivity.myDonations.indexOf(itemId);
+        if (index > -1) {
+            mockUserActivity.myDonations.splice(index, 1);
+        }
+        closeModal();
+        showToast('Anúncio excluído com sucesso!');
+        // Re-renderiza a lista
         renderMyDonations();
     });
 }
