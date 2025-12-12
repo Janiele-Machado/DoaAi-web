@@ -166,6 +166,12 @@ body {
     font-size: 2rem;
 }
 
+/*o título "Criar Conta" */
+#register-screen .auth-card h2 {
+    text-align: center;
+    margin-top: 15px;
+}
+
 .auth-card .subtitle {
     color: var(--text-secondary);
     margin-bottom: var(--spacing-lg);
